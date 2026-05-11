@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Sandhya 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --lavender: #c9b8e8;
+    --lavender-light: #ede8f9;
+    --peach: #f9c4a8;
+    --peach-light: #fdf0e8;
+    --mint: #a8dbc9;
+    --mint-light: #e4f6f0;
+    --text-dark: #5a3e6b;
+    --text-mid: #7a5c8a;
+    --text-light: #a084b8;
+  }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    min-height: 100vh;
+    background: linear-gradient(160deg, #e8d5f5 0%, #fde8dc 40%, #d5ede6 80%, #ead5f5 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  .deco {
+    position: fixed;
+    pointer-events: none;
+    z-index: 0;
+    animation: floatDeco linear infinite;
+  }
+  @keyframes floatDeco {
+    0%   { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+    10%  { opacity: 0.18; }
+    90%  { opacity: 0.18; }
+    100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ── ENVELOPE SCREEN ── */
+  #envelope-screen {
+    position: fixed; inset: 0;
+    background: linear-gradient(160deg, #e8d5f5 0%, #fde8dc 40%, #d5ede6 80%, #ead5f5 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    cursor: pointer;
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  #envelope-screen.hidden {
+    opacity: 0;
+    transform: scale(1.04);
+    pointer-events: none;
+  }
+
+  .env-names {
+    font-family: 'Pacifico', cursive;
+    font-size: 20px;
+    color: var(--text-light);
+    margin-bottom: 36px;
+  }
+
+  .envelope {
+    width: 150px;
+    height: 108px;
+    position: relative;
+    margin-bottom: 32px;
+    animation: envBob 2.2s ease-in-out infinite;
+  }
+  @keyframes envBob {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-12px); }
+  }
+  .env-body {
+    width: 100%; height: 100%;
+    background: linear-gradient(145deg, #fbc8d8, #f5aec0);
+    border-radius: 10px;
+    position: relative;
+    box-shadow: 0 10px 36px rgba(200,80,140,0.22);
+    overflow: hidden;
+  }
+  .env-flap {
+    position: absolute; top: 0; left: 0;
+    width: 0; height: 0;
+    border-left: 75px solid transparent;
+    border-right: 75px solid transparent;
+    border-top: 56px solid #f7b8cc;
+  }
+  .env-left {
+    position: absolute; bottom: 0; left: 0;
+    width: 0; height: 0;
+    border-bottom: 56px solid #f5b0c5;
+    border-right: 75px solid transparent;
+  }
+  .env-right {
+    position: absolute; bottom: 0; right: 0;
+    width: 0; height: 0;
+    border-bottom: 56px solid #f2a0be;
+    border-left: 75px solid transparent;
+  }
+  .env-heart {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -25%);
+    font-size: 34px;
+    animation: heartbeat 1.4s ease-in-out infinite;
+  }
+  @keyframes heartbeat {
+    0%, 100% { transform: translate(-50%, -25%) scale(1); }
+    50%       { transform: translate(-50%, -25%) scale(1.15); }
+  }
+
+  .tap-hint {
+    font-size: 15px;
+    color: var(--text-mid);
+    font-weight: 700;
+    animation: fadePulse 1.8s ease-in-out infinite;
+  }
+  @keyframes fadePulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.45; }
+  }
+
+  /* ── LETTER SCREEN ── */
+  #letter-screen {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 500px;
+    display: none;
+    opacity: 0;
+    transition: opacity 0.7s ease;
+  }
+
+  .letter-card {
+    background: rgba(255, 252, 255, 0.85);
+    backdrop-filter: blur(18px);
+    border-radius: 28px;
+    padding: 44px 44px 40px;
+    box-shadow:
+      0 2px 0 rgba(255,255,255,0.9) inset,
+      0 24px 64px rgba(170, 100, 190, 0.14);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* rainbow top strip */
+  .letter-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 28px; right: 28px;
+    height: 4px;
+    background: linear-gradient(90deg, var(--lavender), var(--peach), var(--mint), var(--lavender));
+    border-radius: 0 0 4px 4px;
+  }
+
+  /* faint line-paper */
+  .letter-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      transparent, transparent 31px,
+      rgba(180,140,210,0.06) 32px
+    );
+    background-position: 0 76px;
+    pointer-events: none;
+    border-radius: 28px;
+  }
+
+  .letter-header {
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .letter-title {
+    font-family: 'Pacifico', cursive;
+    font-size: 31px;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+  }
+  .letter-date {
+    font-size: 12px;
+    color: var(--text-light);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .letter-body {
+    min-height: 190px;
+    margin-bottom: 8px;
+  }
+
+  .letter-line {
+    font-size: 17px;
+    color: var(--text-mid);
+    font-weight: 600;
+    line-height: 1.85;
+    opacity: 0;
+    transition: opacity 0.3s;
+    min-height: 32px;
+  }
+  .letter-line.visible { opacity: 1; }
+  .letter-line.funny   { color: #c06832; }
+  .letter-line.big     { font-size: 18px; color: var(--text-dark); font-weight: 800; margin-top: 6px; }
+  .letter-line.sign    { font-family: 'Pacifico', cursive; font-size: 23px; color: var(--text-dark); margin-top: 14px; font-weight: 400; }
+
+  .cursor {
+    display: inline-block;
+    width: 2px; height: 1em;
+    background: var(--lavender);
+    margin-left: 2px;
+    vertical-align: middle;
+    animation: blink 0.65s step-end infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* ── GALLERY ── */
+  #gallery {
+    opacity: 0;
+    transform: translateY(18px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+    margin-top: 30px;
+  }
+  #gallery.show { opacity: 1; transform: translateY(0); }
+
+  .gallery-label {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-light);
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .photo-slot {
+    aspect-ratio: 1;
+    border-radius: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+    overflow: hidden;
+    border: 2px dashed rgba(180,140,210,0.3);
+  }
+  .photo-slot:nth-child(1) { background: linear-gradient(135deg, var(--lavender-light), #f8e8ff); }
+  .photo-slot:nth-child(2) { background: linear-gradient(135deg, var(--peach-light), #fff0e0); }
+  .photo-slot:nth-child(3) { background: linear-gradient(135deg, var(--mint-light), #e0f8f0); }
+  .photo-slot:hover { transform: scale(1.04); box-shadow: 0 8px 24px rgba(180,100,180,0.18); }
+  .photo-slot input[type=file] {
+    position: absolute; inset: 0;
+    opacity: 0; cursor: pointer;
+    width: 100%; height: 100%;
+  }
+  .photo-slot img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+  .slot-icon { font-size: 28px; pointer-events: none; }
+  .slot-text { font-size: 11px; color: var(--text-light); font-weight: 700; pointer-events: none; }
+
+  /* ── NAMES TAG ── */
+  .names-tag {
+    text-align: center;
+    margin-top: 22px;
+    font-family: 'Pacifico', cursive;
+    font-size: 18px;
+    color: var(--text-dark);
+    opacity: 0;
+    transition: opacity 1s ease 0.5s;
+    letter-spacing: 0.04em;
+  }
+  .names-tag.show { opacity: 1; }
+
+  /* ── BURST HEARTS ── */
+  .burst-heart {
+    position: fixed;
+    pointer-events: none;
+    z-index: 200;
+    animation: burstUp 1.5s ease-out forwards;
+  }
+  @keyframes burstUp {
+    0%   { transform: translateY(0) scale(0.4) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-280px) scale(1.1) rotate(20deg); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<!-- DECO -->
+<div class="deco" style="left:7%;  animation-duration:15s; animation-delay:0s;  font-size:18px;">🌸</div>
+<div class="deco" style="left:20%; animation-duration:19s; animation-delay:4s;  font-size:20px;">💜</div>
+<div class="deco" style="left:38%; animation-duration:13s; animation-delay:7s;  font-size:15px;">🌿</div>
+<div class="deco" style="left:58%; animation-duration:17s; animation-delay:2s;  font-size:18px;">🍑</div>
+<div class="deco" style="left:74%; animation-duration:21s; animation-delay:5s;  font-size:14px;">✨</div>
+<div class="deco" style="left:87%; animation-duration:14s; animation-delay:9s;  font-size:19px;">💕</div>
+
+<!-- ENVELOPE -->
+<div id="envelope-screen" onclick="openEnvelope()">
+  <div class="env-names">Jatin → Sandhya</div>
+  <div class="envelope">
+    <div class="env-body">
+      <div class="env-flap"></div>
+      <div class="env-left"></div>
+      <div class="env-right"></div>
+      <div class="env-heart">💌</div>
+    </div>
+  </div>
+  <p class="tap-hint">tap to open ✨</p>
+</div>
+
+<!-- LETTER -->
+<div id="letter-screen">
+  <div class="letter-card">
+
+    <div class="letter-header">
+      <div class="letter-title">Dear Sandhya 🌸</div>
+      <div class="letter-date">3 months · May 2026</div>
+    </div>
+
+    <div class="letter-body" id="letter-body"></div>
+
+    <div id="gallery">
+      <div class="gallery-label">our little moments 📷</div>
+      <div class="gallery-grid">
+        <div class="photo-slot" id="slot1">
+          <img src="1.jpeg" alt="Description of the image">
+        </div>
+        <div class="photo-slot" id="slot2">
+          <img src="2.jpeg" alt="Description of the image">
+        </div>
+        <div class="photo-slot" id="slot3">
+          <img src="3.jpeg" alt="Description of the image">
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="names-tag" id="names-tag">Jatin 💜 Sandhya</div>
+</div>
+
+<script>
+  const lines = [
+    { text: "It's been 3 months since you walked into my life,", cls: "" },
+    { text: "and honestly… I have zero complaints.", cls: "" },
+    { text: "You make even the boring days feel like something.", cls: "" },
+    { text: "You also steal my food every single time. Every. Time. 🍟", cls: "funny" },
+    { text: "But I'd order double just for you. Always.", cls: "big" },
+    { text: "— Jatin 💜", cls: "sign" },
+  ];
+
+  function openEnvelope() {
+    const env = document.getElementById('envelope-screen');
+    env.classList.add('hidden');
+    setTimeout(() => {
+      env.style.display = 'none';
+      const ls = document.getElementById('letter-screen');
+      ls.style.display = 'block';
+      requestAnimationFrame(() => requestAnimationFrame(() => { ls.style.opacity = '1'; }));
+      setTimeout(startTyping, 400);
+    }, 700);
+  }
+
+  function startTyping() {
+    const body = document.getElementById('letter-body');
+    body.innerHTML = '';
+    const els = lines.map(l => {
+      const d = document.createElement('div');
+      d.className = 'letter-line' + (l.cls ? ' ' + l.cls : '');
+      body.appendChild(d);
+      return d;
+    });
+
+    let li = 0, ci = 0, cursorEl = null;
+
+    function next() {
+      if (li >= lines.length) {
+        cursorEl && cursorEl.remove();
+        showGallery();
+        return;
+      }
+      const el = els[li];
+      el.classList.add('visible');
+
+      if (ci === 0) {
+        el.innerHTML = '';
+        cursorEl && cursorEl.remove();
+        cursorEl = document.createElement('span');
+        cursorEl.className = 'cursor';
+        el.appendChild(cursorEl);
+      }
+
+      if (ci < lines[li].text.length) {
+        el.insertBefore(document.createTextNode(lines[li].text[ci]), cursorEl);
+        ci++;
+        setTimeout(next, 36 + Math.random() * 22);
+      } else {
+        ci = 0; li++;
+        setTimeout(next, 500);
+      }
+    }
+    next();
+  }
+
+  function showGallery() {
+    document.getElementById('gallery').classList.add('show');
+    document.getElementById('names-tag').classList.add('show');
+    burst();
+  }
+
+  function burst() {
+    const e = ['💜','🌸','💕','✨','🍑','💗','🌿'];
+    for (let i = 0; i < 14; i++) {
+      setTimeout(() => {
+        const h = document.createElement('div');
+        h.className = 'burst-heart';
+        h.textContent = e[Math.floor(Math.random() * e.length)];
+        h.style.cssText = `left:${15 + Math.random()*70}vw;top:${40+Math.random()*35}vh;font-size:${16+Math.random()*16}px`;
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 1600);
+      }, i * 80);
+    }
+  }
+
+  function loadPhoto(input, id) {
+    const file = input.files[0];
+    if (!file) return;
+    const slot = document.getElementById(id);
+    const reader = new FileReader();
+    reader.onload = e => {
+      const icon = slot.querySelector('.slot-icon');
+      const txt  = slot.querySelector('.slot-text');
+      if (icon) icon.style.display = 'none';
+      if (txt)  txt.style.display  = 'none';
+      let img = slot.querySelector('img');
+      if (!img) { img = document.createElement('img'); slot.appendChild(img); }
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+</script>
+</body>
+</html>
